@@ -35,27 +35,6 @@ export const learnings: ProjectItem[] = [
 
 /** Some old projects 区块（折叠里显示的老项目） */
  export const oldProjects: ProjectItem[] = [
-  {
-    name: 'ATao-Blog',
-    description: '一个基于 Astro 框架的简约个人博客主题，简单干净，专注于内容展示。',
-    links: [
-      { type: 'github', href: 'https://github.com/HoshiSaneko/ATao-Blog' },
-    ]
-  },
-  {
-    name: 'DeepSeek-Commit-Tool',
-    description: '基于 DeepSeek API 的 Git 提交信息自动生成工具。',
-    links: [
-      { type: 'github', href: 'https://github.com/HoshiSaneko/DeepSeek-Commit-Tool' },
-    ]
-  },
-  {
-    name: 'T-DevTool',
-    description: '现代化的Android设备信息管理工具',
-    links: [
-      { type: 'github', href: 'https://github.com/HoshiSaneko/T-DevTool' },
-    ]
-  },
 ]
 
 /** Others 区块 */

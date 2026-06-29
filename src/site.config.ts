@@ -341,11 +341,11 @@ export const blogHistory = {
     }
   ],
   resources: {
-    description: 'The smooth operation and personalized customization of website also rely on the resources and technical support provided by the following excellent projects/service providers:',
+    description: '技术支持:',
     items: [
       {
         label: 'Domain',
-        content: '<a href="https://www.aliyun.com/" target="_blank">Aliyun</a>'
+        content: '<a href="https://dash.domain.digitalplat.org/" target="_blank">DigitalPlat</a>'
       },
       {
         label: 'Framework & Theme',
@@ -353,23 +353,7 @@ export const blogHistory = {
       },
       {
         label: 'Hosting',
-        content: '<a href="https://www.aliyun.com/product/ecs" target="_blank">Aliyun ECS</a>'
-      },
-      {
-        label: 'CI/CD',
-        content: '<a href="https://github.com/features/actions" target="_blank">GitHub Actions</a>'
-      },
-      {
-        label: 'Comment',
-        content: '<a href="https://waline.js.org" target="_blank">Waline</a>'
-      },
-      {
-        label: 'Visits',
-        content: '<a href="https://supabase.com/" target="_blank">Supabase</a> + <a href="https://waline.js.org/" target="_blank">Waline</a>'
-      },
-      {
-        label: 'Statistics',
-        content: '<a href="https://github.com/spencerwooo/substats" target="_blank">Substats</a>'
+        content: '<a href="https://vercel.com/" target="_blank">Vercel</a>'
       }
     ]
   }
