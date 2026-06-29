@@ -3,11 +3,11 @@ import type { CardListData, Config, IntegrationUserConfig, ThemeUserConfig } fro
 export const theme: ThemeUserConfig = {
   // [Basic]
   /** Title for your website. Will be used in metadata and as browser tab title. */
-  title: '星屿浅奈 ✧ Saneko',
+  title: 'He-TWのCiallo～(∠・ω< )⌒★',
   /** Will be used in index page & copyright declaration */
-  author: 'Saneko',
+  author: 'He-TW',
   /** Description metadata for your website. Can be used in page metadata. */
-  description: '做自己喜欢的事',
+  description: '淡看云烟随风去,笑拥晨光自怡然。',
   /** The default favicon for your site which should be a path to an image in the `public/` directory. */
   favicon: '/favicon/favicon.ico',
   /** The default social card image for your site which should be a path to an image in the `public/` directory. */
@@ -26,9 +26,9 @@ export const theme: ThemeUserConfig = {
   },
   /** Contact information for legal documents */
   contact: {
-    email: 'qiatao0305@163.com',
-    website: 'https://saneko.me', 
-    region: 'China' 
+    email: 'lunarhackerbgg@gmail.com',
+    website: 'https://astro.hetw24.dpdns.org', 
+    region: 'Taiwan' 
   },
   /** Set a logo image to show in the homepage. */
   logo: {
@@ -71,7 +71,7 @@ export const theme: ThemeUserConfig = {
     year: `© ${new Date().getFullYear()}`,
     // ICP 备案信息（可选），显示在版权行
     icp: {
-      title: '浙ICP备2024096834号-4',
+      title: '萌ICP备0721号',
       link: 'https://beian.miit.gov.cn/'
     },
     links: [
@@ -88,10 +88,10 @@ export const theme: ThemeUserConfig = {
     social: (() => {
       // 简化配置：只需填写 ID/用户名/邮箱
       const socialIds = {
-        github: 'HoshiSaneko', // GitHub 用户名
-        bilibili: '291198772', // Bilibili UID
-        tiktok: '71134083952', // 抖音用户 ID
-        email: 'qiatao0305@163.com' // 邮箱账号
+        github: 'hetw24', // GitHub 用户名
+        bilibili: '3494365613787593', // Bilibili UID
+        /* tiktok: '71134083952', */
+        email: 'lunarhackerbgg@gmail.com' // 邮箱账号
       }
       
       // 自动转换为完整 URL（Footer 等组件需要）
@@ -137,29 +137,29 @@ export const theme: ThemeUserConfig = {
   /** Education configuration */
   education: [
     {
-      title: '余姚市第八中学',
+      title: '实验中学',
       date: 'August 2015 - July 2017',
       image: '/src/assets/educations/1.avif'
     },
     {
-      title: '衡阳师范学院',
+      title: '海虞高级中学',
       date: 'August 2017 - July 2021',
       image: '/src/assets/educations/2.avif'
     }
   ],
 
   /** Certifications configuration */
-  certifications: [
+  /* certifications: [
     {
       title: 'Lorem ipsum',
       description: 'Lorem ipsum dolor sit amet, vidit suscipit at mei.',
       date: 'July 2024',
       link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
     }
-  ],
+  ], */
 
   /** Website List configuration for homepage */
-  websiteList: [
+  /* websiteList: [
     {
       title: 'T-DoList',
       description: '轻量级桌面任务清单应用 - 简洁高效的个人任务管理工具',
@@ -178,7 +178,7 @@ export const theme: ThemeUserConfig = {
       link: 'https://github.com/HoshiSaneko/git-commit-gen',
       image: '/src/assets/projects/3.avif'
     },
-  ],
+  ], */
 
 } as ThemeUserConfig & {
   /** Social Networks configuration for About page */
@@ -319,7 +319,7 @@ export const socialNetworks = {
 }
 
 /** Gossips configuration for About page */
-export const gossips = [
+/* export const gossips = [
   {
     title: '最近在忙些什么...',
     content: [
@@ -332,27 +332,19 @@ export const gossips = [
       '想尝试开发一个"下一个是谁"的档案网站，把每个关卡的信息都整理出来～这样大家就可以更方便地查看关卡详情(｡◕‿◕｡)',
     ]
   }
-]
+] */
 
 /** Blog history timeline configuration for About page */
 export const blogHistory = {
-  title: 'Website history:',
+  title: 'About Me:',
   events: [
     {
-      date: '2026-02-26',
-      content: '发现了 <a href="https://github.com/cworld1/astro-theme-pure" target="_blank">Astro Theme Pure</a> 主题，第一反应就是：这就是我想要的！(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'
+      date: '2026-06-09',
+      content: '高考终于结束了(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'
     },
     {
-      date: '2025-12-01',
-      content: '受到一些启发，尝试通过 Gemini 设计自己的站点 <a href="https://github.com/HoshiSaneko/ATao-Blog" target="_blank">ATao-Blog</a>～虽然还在摸索阶段，但感觉还挺有意思的~'
-    },
-    {
-      date: '2025-09-05',
-      content: '改为使用纸鹿的 <a href="https://github.com/L33Z22L11/blog-v3" target="_blank">Clarity</a> 主题，尝试客制化了一些页面'
-    },
-    {
-      date: '2024-05-12',
-      content: '使用 <a href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" target="_blank">anzhiyu</a> 主题创建博客，第一次了解建站相关内容'
+      date: '2024-07-17',
+      content: '初步接触建站'
     }
   ],
   resources: {
@@ -393,46 +385,28 @@ export const blogHistory = {
 /** Devices configuration for About page */
 export const devices = [
   {
-    name: 'iPhone 15 Pro',
+    name: 'iPhone 17',
     description: 'Primary Device',
-    href: 'https://www.apple.com/iphone-15-pro/',
+    href: 'https://www.apple.com/iphone',
     icon: '@/assets/tools/phone.svg?raw'
   },
   {
-    name: 'iPad Air 5',
+    name: 'iPad Mini 5',
     description: 'Tablet',
-    href: 'https://www.apple.com/ipad-air/',
+    href: 'https://www.apple.com/ipad-mini/',
     icon: '@/assets/tools/tablet.svg?raw'
   },
   {
-    name: 'HUAWEI MateBook 14',
+    name: 'Victus 8',
     description: 'Laptop',
-    href: 'https://consumer.huawei.com/cn/laptops/matebook-14/',
+    href: 'https://www.hp.com/cn-zh/gaming-pc/laptops.html',
     icon: '@/assets/tools/laptop.svg?raw'
   },
   {
-    name: 'AirPods',
+    name: 'Edifer W820NB',
     description: 'Wireless Earbuds',
-    href: 'https://www.apple.com/airpods/',
+    href: 'https://www.edifier.com/cn/product/product-432.html',
     icon: '@/assets/tools/airpods.svg?raw'
-  },
-  {
-    name: 'HUAWEI Sound X4',
-    description: 'Smart Speaker',
-    href: 'https://consumer.huawei.com/cn/audio/sound-x/',
-    icon: '@/assets/tools/speaker.svg?raw'
-  },
-  {
-    name: 'ILCE-6400L',
-    description: 'Sony Alpha 6400 Camera',
-    href: 'https://www.sony.com/electronics/interchangeable-lens-cameras/ilce-6400',
-    icon: '@/assets/tools/camera.svg?raw'
-  },
-  {
-    name: 'Tamron 17-70mm F/2.8',
-    description: 'Camera Lens',
-    href: 'https://www.tamron.com/global/consumer/products/lenses/b070.html',
-    icon: '@/assets/tools/lens.svg?raw'
   }
 ]
 
@@ -452,12 +426,6 @@ export const tools = [
           description: 'Video Editing',
           href: 'https://www.adobe.com/products/premiere',
           icon: '@/assets/tools/premiere.svg?raw'
-        },
-        {
-          name: 'Figma',
-          description: 'Design Tool',
-          href: 'https://www.figma.com/',
-          icon: '@/assets/tools/figma.svg?raw'
         }
       ]
     },
@@ -475,12 +443,6 @@ export const tools = [
           description: 'Markdown Editor',
           href: 'https://typora.io/',
           icon: '@/assets/tools/typora.svg?raw'
-        },
-        {
-          name: 'Sourcetree',
-          description: 'Git Client',
-          href: 'https://www.sourcetreeapp.com/',
-          icon: '@/assets/tools/sourcetree.svg?raw'
         }
       ]
     },
@@ -492,24 +454,6 @@ export const tools = [
           description: 'IDE',
           href: 'https://code.visualstudio.com/',
           icon: '@/assets/tools/vscode.svg?raw'
-        },
-        {
-          name: 'Visual Studio',
-          description: 'IDE',
-          href: 'https://visualstudio.microsoft.com/',
-          icon: '@/assets/tools/visualstudio.svg?raw'
-        },
-        {
-          name: 'Android Studio',
-          description: 'IDE',
-          href: 'https://developer.android.com/studio?hl=zh-cn',
-          icon: '@/assets/tools/androidstudio.svg?raw'
-        },
-        {
-          name: 'Docker',
-          description: 'Container Platform',
-          href: 'https://www.docker.com/',
-          icon: '@/assets/tools/docker.svg?raw'
         },
         {
           name: 'Cursor',
@@ -553,9 +497,9 @@ export const integ: IntegrationUserConfig = {
     // Yourself link info
     applyTip: [
       { name: '名称', val: theme.author }, 
-      { name: '简介', val: 'Do the things that I like.'}, 
-      { name: '链接', val: 'https://saneko.me' }, 
-      { name: '头像', val: 'https://cdn.blog.saneko.me/Web/Avatar.png' }
+      { name: '简介', val: '淡看云烟随风去,笑拥晨光自怡然。'}, 
+      { name: '链接', val: 'https://astro.hetw24.dpdns.org' }, 
+      { name: '头像', val: 'https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/Avatar/wechat%20icon.png' }
     ],
     // Cache avatars in `public/avatars/` to improve user experience.
     cacheAvatar: false
@@ -599,7 +543,7 @@ export const integ: IntegrationUserConfig = {
   },
   // Comment system
   waline: {
-    enable: true,
+    enable: false,
     // Server service link
     server: 'https://waline.saneko.me',
     // Show meta info for comments
