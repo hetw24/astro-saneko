@@ -34,7 +34,7 @@ export const learnings: ProjectItem[] = [
 ]
 
 /** Some old projects 区块（折叠里显示的老项目） */
-/* export const oldProjects: ProjectItem[] = [
+ export const oldProjects: ProjectItem[] = [
   {
     name: 'ATao-Blog',
     description: '一个基于 Astro 框架的简约个人博客主题，简单干净，专注于内容展示。',
@@ -56,7 +56,7 @@ export const learnings: ProjectItem[] = [
       { type: 'github', href: 'https://github.com/HoshiSaneko/T-DevTool' },
     ]
   },
-] */
+]
 
 /** Others 区块 */
 export const others: ProjectItem[] = [
