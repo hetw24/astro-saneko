@@ -90,7 +90,7 @@ export const theme: ThemeUserConfig = {
       const socialIds = {
         github: 'hetw24', // GitHub 用户名
         bilibili: '3494365613787593', // Bilibili UID
-        tiktok: '#',
+        tiktok: '1559608755',
         email: 'lunarhackerbgg@gmail.com' // 邮箱账号
       }
       
@@ -104,16 +104,15 @@ export const theme: ThemeUserConfig = {
     })(),
     /** Optional details about the about section in homepage. */
     about: {
-      intro: 'Automation Development Engineer',
-      bio: 'Sharing experiences, code, and Minecraft-related content. Covering technical fields such as AI, Docker, WPF, Python, and Android, along with practical tools and tips.',
-      motto: 'The road is long; I shall seek high and low.',
+      intro: 'Information Technology Engineer',
+      bio: '生死皆为旅途，当蝴蝶停落枝头，那凋零的又将新生。',
+      motto: '淡看云烟随风去,笑拥晨光自怡然。',
       spoiler: '累了就歇歇吧，摸会儿鱼没关系的～',
-      mbti: 'INFJ-T',
+      mbti: 'INFP',
       hobbies: [
-        'Watching sunset by the sea.',
-        'Listening to soft music alone.',
-        'Reading books on a quiet afternoon.',
-        'Taking photos of the sky.'
+        'Watching sunset',
+        'Listening to lofi',
+        'Enjoying coffee on a quiet afternoon',
       ]
     }
   },
@@ -138,13 +137,13 @@ export const theme: ThemeUserConfig = {
   education: [
     {
       title: '实验中学',
-      date: 'August 2015 - July 2017',
+      date: 'Sep 2020 - Jun 2023',
       image: '/src/assets/educations/1.avif'
     },
     {
       title: '海虞高级中学',
-      date: 'August 2017 - July 2021',
-      image: '/src/assets/educations/2.avif'
+      date: 'Sep 2023 - Jun 2026',
+      image: '/src/assets/educations/海虞.avif'
     }
   ],
 
@@ -323,13 +322,7 @@ export const socialNetworks = {
   {
     title: '最近在忙些什么...',
     content: [
-      '最近疯狂在刷"下一个是谁"，真的觉得是B站上最棒的节目了！(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'
-    ]
-  },
-  {
-    title: '一些有趣的想法...',
-    content: [
-      '想尝试开发一个"下一个是谁"的档案网站，把每个关卡的信息都整理出来～这样大家就可以更方便地查看关卡详情(｡◕‿◕｡)',
+      '学习Codex ing...(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'
     ]
   }
 ] 
