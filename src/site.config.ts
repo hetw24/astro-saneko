@@ -340,7 +340,7 @@ export const blogHistory = {
       content: '初步接触建站'
     }
   ],
-  /* resources: {
+  resources: {
     description: 'The smooth operation and personalized customization of website also rely on the resources and technical support provided by the following excellent projects/service providers:',
     items: [
       {
@@ -373,7 +373,7 @@ export const blogHistory = {
       }
     ]
   }
-} */
+}
 
 /** Devices configuration for About page */
 export const devices = [
