@@ -319,7 +319,7 @@ export const socialNetworks = {
 }
 
 /** Gossips configuration for About page */
-/* export const gossips = [
+ export const gossips = [
   {
     title: '最近在忙些什么...',
     content: [
@@ -332,7 +332,7 @@ export const socialNetworks = {
       '想尝试开发一个"下一个是谁"的档案网站，把每个关卡的信息都整理出来～这样大家就可以更方便地查看关卡详情(｡◕‿◕｡)',
     ]
   }
-] */
+] 
 
 /** Blog history timeline configuration for About page */
 export const blogHistory = {
