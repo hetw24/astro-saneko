@@ -1,0 +1,153 @@
+---
+title: '高级组件'
+description: '高级组件与进阶用法说明'
+order: 2
+---
+
+import { MdxRepl } from 'astro-pure/user'
+
+## 网页内容渲染
+
+### Quote 随机语录
+
+`Quote` 用于在页脚等位置展示随机语录。
+
+<MdxRepl>
+import { Quote } from 'astro-pure/advanced'
+
+<Quote />
+
+<Fragment slot='desc'>
+```jsx
+import { Quote } from 'astro-pure/advanced'
+
+<Quote />
+```
+</Fragment>
+</MdxRepl>
+
+配置方式：
+
+```ts title="src/site.config.ts"
+export const integ: IntegrationUserConfig = {
+  // 在页脚（如首页）显示随机语录
+  quote: {
+    // https://github.com/lukePeavey/quotable
+    server: 'https://api.quotable.io/quotes/random?maxLength=60',
+    target: `(data) => data[0].content || '获取失败'`
+  }
+}
+```
+
+[Quotable](https://github.com/lukePeavey/quotable) 提供英文随机语录 API。
+
+中文语录可使用 [一言 Hitokoto](https://developer.hitokoto.cn/sentence/)。
+
+```ts title="src/site.config.ts"
+export const integ: IntegrationUserConfig = {
+  quote: {
+    // https://developer.hitokoto.cn/sentence/#%E8%AF%B7%E6%B1%82%E5%9C%B0%E5%9D%80
+    server: 'https://v1.hitokoto.cn/?c=i',
+    target: `(data) => data.hitokoto || '获取失败'`
+  }
+}
+```
+
+### GithubCard GitHub 仓库卡片
+
+在内容中嵌入 GitHub 仓库信息卡片。
+
+<MdxRepl width='80%'>
+import { GithubCard } from 'astro-pure/advanced'
+
+<GithubCard repo='cworld1/astro-theme-pure' />
+
+<Fragment slot='desc'>
+```jsx
+import { GithubCard } from 'astro-pure/advanced'
+
+<GithubCard repo='cworld1/astro-theme-pure' />
+```
+</Fragment>
+</MdxRepl>
+
+### LinkPreview 链接预览
+
+对内容中的链接生成预览卡片。
+
+<MdxRepl width='80%'>
+import { LinkPreview } from 'astro-pure/advanced'
+
+<LinkPreview href='https://www.mozilla.org/en-US/' />
+<LinkPreview href='https://www.cloudflare.com/' hideMedia />
+
+<Fragment slot='desc'>
+```jsx
+import { LinkPreview } from 'astro-pure/advanced'
+
+<LinkPreview href='https://www.cloudflare.com/' />
+<LinkPreview href='https://www.cloudflare.com/' hideMedia />
+```
+</Fragment>
+</MdxRepl>
+
+## 数据与转换
+
+### QRCode 二维码
+
+<MdxRepl>
+import { QRCode } from 'astro-pure/advanced'
+
+<QRCode
+  content='https://github.com/cworld1/astro-theme-pure'
+  class='inline-flex max-w-44 p-3 bg-muted rounded-lg border' />
+
+<Fragment slot='desc'>
+```jsx
+import { QRCode } from 'astro-pure/advanced'
+
+// <QRCode /> 不传 content 时默认使用当前页链接
+<QRCode
+  content='https://github.com/cworld1/astro-theme-pure'
+  class='inline-flex max-w-44 p-3 bg-muted rounded-lg border' />
+```
+</Fragment>
+</MdxRepl>
+
+### Toast 提示
+
+<MdxRepl>
+import { Button } from 'astro-pure/user'
+
+<Button
+  title='点击试试'
+  onClick={`document.dispatchEvent(
+    new CustomEvent('toast', {
+      detail: {
+        message: '来自 Toast 的问候！',
+        time: 5000
+      }
+    })
+  )`} />
+<Fragment slot='desc'>
+```jsx
+import { Button } from 'astro-pure/user'
+
+<Button
+  title='点击试试'
+  onClick={`document.dispatchEvent(
+    new CustomEvent('toast', {
+      detail: { message: '来自 Toast 的问候！', time: 5000 }
+    })
+  )`} />
+```
+</Fragment>
+</MdxRepl>
+
+### Medium Zoom 图片放大
+
+点击下方图片可体验放大效果。
+
+![img](https://github.com/user-attachments/assets/6c42b061-df7e-4696-a29b-bff07fe17d88)
+
+在 `site.config.ts` 的 `integ.mediumZoom` 中可开启或配置图片点击放大行为。

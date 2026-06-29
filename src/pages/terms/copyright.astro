@@ -1,0 +1,94 @@
+---
+import { Button } from 'astro-pure/user'
+import PageLayout from '@/layouts/BaseLayout.astro'
+import config from '@/site-config'
+
+const meta = {
+  title: 'Copyright',
+  description: 'Effective date: 2026-02-28'
+}
+
+const contact = (config as any).contact || {
+  email: 'qiatao0305@163.com',
+  website: 'https://your-website.com',
+  region: 'China'
+}
+---
+
+<PageLayout {meta}>
+  <Button title='Back' href='/terms' variant='back' />
+  <main class='mt-6 lg:mt-10'>
+    <div id='content-header' class='animate'>
+      <h1 class='mb-6 text-3xl font-medium'>Copyright / 版权声明</h1>
+      <p class='text-muted-foreground'>Effective Date: February 28, 2026 / 生效日期：2026年2月28日</p>
+    </div>
+
+    <div id='content' class='animate mt-8 prose prose-slate dark:prose-invert max-w-none'>
+      <h2>Copyright Ownership / 版权所有权</h2>
+      <p>All content on this website, including but not limited to text, graphics, logos, images, audio clips, digital downloads, and software, is the property of the website owner or its content suppliers and is protected by international copyright laws.</p>
+      <p>本网站上的所有内容，包括但不限于文本、图形、徽标、图像、音频剪辑、数字下载和软件，均为网站所有者或其内容供应商的财产，受国际版权法保护。</p>
+
+      <h2>Reserved Rights / 保留权利</h2>
+      <p>All rights are reserved. No part of this website may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording, or other electronic or mechanical methods, without the prior written permission of the copyright owner.</p>
+      <p>保留所有权利。未经版权所有者事先书面许可，不得以任何形式或任何方式（包括影印、录音或其他电子或机械方法）复制、分发或传播本网站的任何部分。</p>
+
+      <h2>Fair Use / 合理使用</h2>
+      <p>You may use limited portions of our content for personal, non-commercial purposes, such as:</p>
+      <p>您可以将我们内容的有限部分用于个人、非商业目的，例如：</p>
+      <ul>
+        <li>Quoting short excerpts for educational or research purposes / 为教育或研究目的引用简短摘录</li>
+        <li>Sharing links to our articles on social media / 在社交媒体上分享我们文章的链接</li>
+        <li>Creating bookmarks for personal reference / 创建个人参考的书签</li>
+      </ul>
+      <p>However, you must:</p>
+      <p>但是，您必须：</p>
+      <ul>
+        <li>Provide proper attribution and credit to the original source / 提供适当的署名和来源归属</li>
+        <li>Not use the content for commercial purposes / 不将内容用于商业目的</li>
+        <li>Not modify or alter the content / 不修改或更改内容</li>
+      </ul>
+
+      <h2>Third-Party Content / 第三方内容</h2>
+      <p>Some content on this website may be the property of third parties. We respect the intellectual property rights of others and expect our users to do the same.</p>
+      <p>本网站上的某些内容可能属于第三方财产。我们尊重他人的知识产权，并期望我们的用户也这样做。</p>
+      <p>If you believe that any content on this website infringes your copyright, please contact us immediately.</p>
+      <p>如果您认为本网站上的任何内容侵犯了您的版权，请立即联系我们。</p>
+
+      <h2>User-Generated Content / 用户生成的内容</h2>
+      <p>If you post comments or other content on this website, you retain ownership of your content. However, by posting content, you grant us a non-exclusive, royalty-free, perpetual, and worldwide license to use, reproduce, modify, and distribute such content.</p>
+      <p>如果您在本网站上发布评论或其他内容，您保留对您内容的所有权。但是，通过发布内容，您授予我们非排他性、免版税、永久和全球性的许可，以使用、复制、修改和分发此类内容。</p>
+
+      <h2>DMCA / 数字千年版权法</h2>
+      <p>If you are a copyright owner and believe that your work has been copied in a way that constitutes copyright infringement, please provide us with the following information:</p>
+      <p>如果您是版权所有者，并认为您的作品已被以构成版权侵权的方式复制，请向我们提供以下信息：</p>
+      <ol>
+        <li>A description of the copyrighted work that you claim has been infringed / 您声称被侵权的受版权保护作品的描述</li>
+        <li>The location on our website where the material that you claim is infringing is located / 您声称侵权的材料在我们网站上的位置</li>
+        <li>Your contact information, including name, address, telephone number, and email address / 您的联系信息，包括姓名、地址、电话号码和电子邮件地址</li>
+        <li>A statement that you have a good faith belief that the disputed use is not authorized by the copyright owner / 声明您有合理理由相信争议使用未经版权所有者授权</li>
+        <li>A statement that the information in your notice is accurate and that you are the copyright owner or authorized to act on the copyright owner's behalf / 声明您通知中的信息准确，并且您是版权所有者或授权代表版权所有者行事</li>
+      </ol>
+
+      <h2>License for Sharing / 分享许可</h2>
+      <p>You are welcome to share links to our articles on social media platforms, provided that:</p>
+      <p>欢迎您在社交媒体平台上分享我们文章的链接，前提是：</p>
+      <ul>
+        <li>You do not alter the content / 您不更改内容</li>
+        <li>You provide proper attribution / 您提供适当的署名</li>
+        <li>You do not use our content for commercial purposes / 您不将我们的内容用于商业目的</li>
+      </ul>
+
+      <h2>Contact Information / 联系信息</h2>
+      <p>For copyright-related inquiries, please contact us:</p>
+      <p>有关版权相关的询问，请联系我们：</p>
+      <ul>
+        <li>Email: <a href={`mailto:${contact.email}`}>{contact.email}</a> / 电子邮件：<a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+        <li>Website: <a href={contact.website} target='_blank' rel='noopener noreferrer'>{contact.website}</a> / 网站：<a href={contact.website} target='_blank' rel='noopener noreferrer'>{contact.website}</a></li>
+      </ul>
+
+      <hr />
+
+      <p><em>This Copyright Notice was last updated on February 28, 2026. / 本版权声明最后更新于2026年2月28日。</em></p>
+    </div>
+  </main>
+</PageLayout>

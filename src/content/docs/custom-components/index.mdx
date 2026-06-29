@@ -1,0 +1,153 @@
+---
+title: '自定义组件'
+description: '本站新增的 MDX 组件说明'
+order: 1
+---
+
+import { MdxRepl } from 'astro-pure/user'
+
+## 内容展示
+
+### ProsCons 优缺点
+
+用于并排展示优点与缺点，左侧为优点（绿色），右侧为缺点（琥珀色）。
+
+<MdxRepl width='100%'>
+import { ProsCons } from 'astro-pure/user'
+
+<ProsCons>
+  <Fragment slot='pros'>
+    <ul>
+      <li>易于上手</li>
+      <li>社区活跃</li>
+      <li>文档完善</li>
+    </ul>
+  </Fragment>
+  <Fragment slot='cons'>
+    <ul>
+      <li>性能一般</li>
+      <li>生态较新</li>
+    </ul>
+  </Fragment>
+</ProsCons>
+
+{/* 自定义标题 */}
+<ProsCons prosTitle='Pros' consTitle='Cons'>
+  <Fragment slot='pros'><p>Fast and lightweight.</p></Fragment>
+  <Fragment slot='cons'><p>Less plugins.</p></Fragment>
+</ProsCons>
+
+<Fragment slot='desc'>
+  ```jsx
+  import { ProsCons } from 'astro-pure/user'
+
+  <ProsCons>
+    <Fragment slot='pros'>
+      <ul>
+        <li>易于上手</li>
+        <li>社区活跃</li>
+      </ul>
+    </Fragment>
+    <Fragment slot='cons'>
+      <ul>
+        <li>性能一般</li>
+      </ul>
+    </Fragment>
+  </ProsCons>
+
+  <ProsCons prosTitle='Pros' consTitle='Cons'>
+    <Fragment slot='pros'><p>Fast.</p></Fragment>
+    <Fragment slot='cons'><p>Less plugins.</p></Fragment>
+  </ProsCons>
+  ```
+</Fragment>
+</MdxRepl>
+
+---
+
+## 交互模拟
+
+### WeChatChat 微信聊天
+
+用于模拟微信聊天窗口
+
+<MdxRepl width='100%'>
+import { WeChatChat } from 'astro-pure/user'
+import avatar from '@/assets/docs/favicon.png'
+
+<WeChatChat
+  title="Minecraft 群聊"
+  mainSpeaker="Saneko"
+  messages={[
+    { name: 'Xe_Kr', avatar: 'minecraft', content: '下界门搭好了吗？', time: '18:20' },
+    { name: 'hsds', avatar: 'minecraft', content: '搭好了，要一起吗？', time: '18:22' },
+    { name: 'Saneko', avatar: avatar.src, content: '等我挖点黑曜石', time: '18:23' },
+    { name: 'Xe_Kr', avatar: 'minecraft', content: '好，我发个坐标 👍', time: '18:24' },
+  ]}
+/>
+
+<Fragment slot='desc'>
+  ```jsx
+  import { WeChatChat } from 'astro-pure/user'
+  import avatar from '@/assets/docs/favicon.png'
+
+  // mainSpeaker 指定主视角，该角色消息在右侧（绿色气泡）
+  <WeChatChat
+    title="Minecraft 群聊"
+    mainSpeaker="Saneko"
+    messages={[
+      { name: 'Xe_Kr', avatar: 'minecraft', content: '下界门搭好了吗？', time: '18:20' },
+      { name: 'hsds', avatar: 'minecraft', content: '搭好了，要一起吗？', time: '18:22' },
+      { name: 'Saneko', avatar: avatar.src, content: '等我挖点黑曜石', time: '18:23' },
+      { name: 'Xe_Kr', avatar: 'minecraft', content: '好，我发个坐标 👍', time: '18:24' },
+    ]}
+  />
+  // 默认使用minecraft头像；自定义头像：avatar 传图片 URL 或 import 后的 .src；带图片的消息可加 image 字段
+  ```
+</Fragment>
+</MdxRepl>
+
+---
+
+## 媒体嵌入
+
+### Video 视频
+
+用于在正文中嵌入并播放视频，基于 HTML5 `<video>`，支持控件、封面图、自动播放等常用属性。
+
+<MdxRepl width='100%'>
+import { Video } from 'astro-pure/user'
+
+{/* 带封面图与循环静音播放 */}
+<Video
+  src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+  poster="https://interactive-examples.mdn.mozilla.net/media/cc0-images/flower.jpg"
+  controls
+  loop
+  muted
+/>
+
+<Fragment slot='desc'>
+  ```jsx
+  import { Video } from 'astro-pure/user'
+
+  // Props 说明：
+  // src (string, 必填) - 视频地址（相对路径或完整 URL）
+  // poster (string) - 封面图地址
+  // controls (boolean, 默认 true) - 是否显示播放控件
+  // autoplay (boolean, 默认 false) - 是否自动播放（多数浏览器需配合 muted）
+  // muted (boolean, 默认 false) - 是否静音
+  // loop (boolean, 默认 false) - 是否循环播放
+  // playsInline (boolean, 默认 true) - 是否内联播放（移动端避免全屏）
+  // preload ('none'|'metadata'|'auto', 默认 'metadata') - 预加载策略
+  // width (string|number) - 宽度（数字为像素，字符串如 '80%'）
+  <Video
+    src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+    poster="https://interactive-examples.mdn.mozilla.net/media/cc0-images/flower.jpg"
+    controls
+    loop
+    muted
+  />
+  ```
+</Fragment>
+</MdxRepl>

@@ -1,0 +1,273 @@
+---
+import { type ImageMetadata } from 'astro'
+import { Button, Collapse, Spoiler, Timeline } from 'astro-pure/user'
+import PageLayout from '@/layouts/CommonPage.astro'
+import Substats from '@/components/about/Substats.astro'
+import ToolSection from '@/components/about/ToolSection.astro'
+import ProjectCard from '@/components/home/ProjectCard.astro'
+import Section from '@/components/home/Section.astro'
+import config from '@/site-config'
+import { tools, socialNetworks, gossips, blogHistory, devices } from '@/site-config'
+
+const headings = [
+  { depth: 2, slug: 'education', text: 'Education' },
+  { depth: 2, slug: 'hobbies', text: 'Hobbies' },
+  { depth: 2, slug: 'tools', text: 'Tools' },
+  { depth: 2, slug: 'devices', text: 'Devices' },
+  { depth: 2, slug: 'social-networks', text: 'Social Networks' },
+  { depth: 2, slug: 'gossips', text: 'Gossips' },
+  { depth: 2, slug: 'about-blog', text: 'About Blog' }
+]
+---
+
+<PageLayout title='About' {headings} comment>
+  <p>{config.footer.about?.intro}</p>
+  <p>{config.footer.about?.bio}</p>
+  <p>
+    Motto: {config.footer.about?.motto} <Spoiler>{config.footer.about?.spoiler}</Spoiler>
+  </p>
+  {
+    config.footer.about?.mbti && (
+      <p>
+        MBTI: <span class='font-medium'>{config.footer.about.mbti}</span>
+      </p>
+    )
+  }
+
+  {/* general-talk */}
+  {
+    config.footer.about?.hobbies && (
+      <>
+        <h2 id='hobbies'>Hobbies</h2>
+        <ul>
+          {config.footer.about.hobbies.map((hobby) => (
+            <li>{hobby}</li>
+          ))}
+        </ul>
+      </>
+    )
+  }
+
+  {/* education */}
+  {
+    config.education && config.education.length > 0 && (
+      <>
+        <h2 id='education'>Education</h2>
+        <div class='grid grid-cols-1 gap-3 sm:grid-cols-2'>
+          {config.education.map((item) => (
+            <ProjectCard
+              heading={item.title}
+              subheading={item.date || ''}
+              imagePath={item.image || ''}
+              href=''
+              class='pointer-events-none h-32 sm:h-36 no-underline [&_.project-card-fg]:items-start [&_.project-card-fg]:justify-end [&_.project-card-fg]:px-4 [&_.project-card-fg]:pb-3 [&_.project-card-fg]:pt-0 [&_.project-card-fg]:gap-0 [&_h2]:mb-0 [&_h2]:no-underline [&_p]:text-xs [&_p]:text-muted-foreground [&_p]:mt-0 [&_p]:no-underline'
+            />
+          ))}
+        </div>
+      </>
+    )
+  }
+
+  {/* tools */}
+  <h2 id='tools'>Tools</h2>
+  <p>Current support tools as follow:</p>
+  {
+    tools.map((section) => {
+      // 处理工具图标导入
+      const toolsWithIcons = section.items.map((tool: any) => {
+        const toolWithIcon: {
+          name: string
+          description: string
+          href: string
+          icon?: any
+          darkIcon?: any
+        } = {
+          name: tool.name,
+          description: tool.description,
+          href: tool.href
+        }
+        
+        // 根据配置中的图标路径字符串，动态导入对应的图标
+        // 注意：Astro 需要静态可分析的导入路径，所以这里使用条件语句
+        if (tool.icon) {
+          const iconPath = tool.icon.replace('@/', '@/')
+          // 根据路径导入对应的图标
+          if (iconPath.includes('photoshop')) {
+            toolWithIcon.icon = import('@/assets/tools/photoshop.svg?raw')
+          } else if (iconPath.includes('illustrator')) {
+            toolWithIcon.icon = import('@/assets/tools/illustrator.svg?raw')
+          } else if (iconPath.includes('aftereffects')) {
+            toolWithIcon.icon = import('@/assets/tools/aftereffects.svg?raw')
+          } else if (iconPath.includes('premiere')) {
+            toolWithIcon.icon = import('@/assets/tools/premiere.svg?raw')
+          } else if (iconPath.includes('cursor')) {
+            toolWithIcon.icon = import('@/assets/tools/cursor.svg?raw')
+          } else if (iconPath.includes('chrome')) {
+            toolWithIcon.icon = import('@/assets/tools/chrome.svg?raw')
+          } else if (iconPath.includes('firefox')) {
+            toolWithIcon.icon = import('@/assets/tools/firefox.svg?raw')
+          } else if (iconPath.includes('notion')) {
+            toolWithIcon.icon = import('@/assets/tools/notion.svg?raw')
+          } else if (iconPath.includes('typora')) {
+            toolWithIcon.icon = import('@/assets/tools/typora.svg?raw')
+          } else if (iconPath.includes('sourcetree')) {
+            toolWithIcon.icon = import('@/assets/tools/sourcetree.svg?raw')
+          } else if (iconPath.includes('vscode')) {
+            toolWithIcon.icon = import('@/assets/tools/vscode.svg?raw')
+          } else if (iconPath.includes('neovim')) {
+            toolWithIcon.icon = import('@/assets/tools/neovim.svg?raw')
+          } else if (iconPath.includes('sublime')) {
+            toolWithIcon.icon = import('@/assets/tools/sublime.svg?raw')
+          } else if (iconPath.includes('visualstudio')) {
+            toolWithIcon.icon = import('@/assets/tools/visualstudio.svg?raw')
+          } else if (iconPath.includes('androidstudio')) {
+            toolWithIcon.icon = import('@/assets/tools/androidstudio.svg?raw')
+          } else if (iconPath.includes('archlinux')) {
+            toolWithIcon.icon = import('@/assets/tools/archlinux.svg?raw')
+          } else if (iconPath.includes('ubuntu')) {
+            toolWithIcon.icon = import('@/assets/tools/ubuntu.svg?raw')
+          } else if (iconPath.includes('apple')) {
+            toolWithIcon.icon = import('@/assets/tools/apple.svg?raw')
+          } else if (iconPath.includes('windows11')) {
+            toolWithIcon.icon = import('@/assets/tools/windows11.svg?raw')
+          } else if (iconPath.includes('figma')) {
+            toolWithIcon.icon = import('@/assets/tools/figma.svg?raw')
+          } else if (iconPath.includes('docker')) {
+            toolWithIcon.icon = import('@/assets/tools/docker.svg?raw')
+          }
+          // 如果路径不匹配，则不设置图标（将显示文字）
+        }
+        
+        // 处理暗色模式图标（类似逻辑）
+        if (tool.darkIcon && typeof tool.darkIcon === 'string') {
+          const darkIconPath = tool.darkIcon.replace('@/', '@/')
+          // 可以根据需要添加暗色模式图标的导入逻辑
+        }
+        
+        return toolWithIcon
+      })
+      
+      return (
+        <ToolSection
+          class='mb-5'
+          title={section.title}
+          tools={toolsWithIcons}
+        />
+      )
+    })
+  }
+
+  {/* devices */}
+  <h2 id='devices'>Devices</h2>
+  <p>My electronic devices as follow:</p>
+  {
+    (() => {
+      // 处理设备图标导入
+      const devicesWithIcons = devices.map((device: any) => {
+        const deviceWithIcon: {
+          name: string
+          description: string
+          href: string
+          icon?: any
+          darkIcon?: any
+        } = {
+          name: device.name,
+          description: device.description,
+          href: device.href
+        }
+        
+        // 处理设备图标导入
+        if (device.icon) {
+          const iconPath = device.icon.replace('@/', '@/')
+          // 根据图标路径导入对应的图标
+          if (iconPath.includes('phone')) {
+            deviceWithIcon.icon = import('@/assets/tools/phone.svg?raw')
+          } else if (iconPath.includes('tablet')) {
+            deviceWithIcon.icon = import('@/assets/tools/tablet.svg?raw')
+          } else if (iconPath.includes('laptop')) {
+            deviceWithIcon.icon = import('@/assets/tools/laptop.svg?raw')
+          } else if (iconPath.includes('airpods')) {
+            deviceWithIcon.icon = import('@/assets/tools/airpods.svg?raw')
+          } else if (iconPath.includes('headphones')) {
+            deviceWithIcon.icon = import('@/assets/tools/headphones.svg?raw')
+          } else if (iconPath.includes('speaker')) {
+            deviceWithIcon.icon = import('@/assets/tools/speaker.svg?raw')
+          } else if (iconPath.includes('camera')) {
+            deviceWithIcon.icon = import('@/assets/tools/camera.svg?raw')
+          } else if (iconPath.includes('lens')) {
+            deviceWithIcon.icon = import('@/assets/tools/lens.svg?raw')
+          } else if (iconPath.includes('apple')) {
+            deviceWithIcon.icon = import('@/assets/tools/apple.svg?raw')
+          } else if (iconPath.includes('huawei')) {
+            deviceWithIcon.icon = import('@/assets/tools/huawei.svg?raw')
+          } else if (iconPath.includes('sony')) {
+            deviceWithIcon.icon = import('@/assets/tools/sony.svg?raw')
+          } else if (iconPath.includes('tamron')) {
+            deviceWithIcon.icon = import('@/assets/tools/tamron.svg?raw')
+          }
+        }
+        
+        return deviceWithIcon
+      })
+      
+      return (
+        <ToolSection
+          class='mb-5'
+          title='Devices'
+          tools={devicesWithIcons}
+        />
+      )
+    })()
+  }
+
+  {/* social-networks */}
+  {
+    socialNetworks && (
+      <>
+        <h2 id='social-networks'>Social Networks</h2>
+        <p class='flex items-center gap-2'>
+          <span>{socialNetworks.description}</span>
+          <span class='text-sm'>
+            <Spoiler>别只是偷看啦~关注一下吧~ ✨</Spoiler>
+          </span>
+        </p>
+        <Substats stats={socialNetworks.stats as any} />
+      </>
+    )
+  }
+
+  {/* gossips */}
+  <h2 id='gossips'>Gossips</h2>
+  {
+    gossips && gossips.map((gossip) => (
+      <Collapse title={gossip.title}>
+        {gossip.content.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </Collapse>
+    ))
+  }
+
+  {/* about-blog */}
+  <h2 id='about-blog'>About Blog</h2>
+  {
+    blogHistory && (
+      <>
+        <p>{blogHistory.title}</p>
+        <Timeline events={blogHistory.events} />
+      </>
+    )
+  }
+  {
+    blogHistory?.resources && (
+      <>
+        <p>{blogHistory.resources.description}</p>
+        <ul>
+          {blogHistory.resources.items.map((item) => (
+            <li set:html={`${item.label}: ${item.content}`} />
+          ))}
+        </ul>
+      </>
+    )
+  }
+</PageLayout>

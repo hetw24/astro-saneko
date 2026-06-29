@@ -1,0 +1,162 @@
+---
+import { cn } from '../../utils'
+
+export interface ChatMessage {
+  /** 发言人昵称 */
+  name: string
+  /** 头像：'minecraft' 使用 MC 皮肤头像；或传入自定义图片 URL/路径（如 'https://...'、'/images/avatar.png'、'./avatar.png'） */
+  avatar: 'minecraft' | string
+  /** 文字内容，支持换行与 emoji */
+  content: string
+  /** 可选：该条消息附带的图片 URL */
+  image?: string
+  /** 可选：消息时间，如 "23:31" 或 "11月23日 23:31" */
+  time?: string
+}
+
+interface Props {
+  /** 聊天消息列表，按时间顺序 */
+  messages: ChatMessage[]
+  /** 主视角角色：该角色的消息显示在右侧（绿色气泡，表示「自己」），未设置则按首次出现顺序左右交替 */
+  mainSpeaker?: string
+  /** 外层容器 class */
+  class?: string
+  /** 聊天窗口标题（如微信群名） */
+  title?: string
+}
+
+const { messages, mainSpeaker, class: className, title = '微信' } = Astro.props
+
+// 左右布局：若指定了 mainSpeaker，该角色在右侧；否则按首次出现顺序左右交替
+const nameSide = new Map<string, 'left' | 'right'>()
+if (mainSpeaker != null && mainSpeaker !== '') {
+  for (const m of messages) {
+    if (!nameSide.has(m.name)) {
+      nameSide.set(m.name, m.name === mainSpeaker ? 'right' : 'left')
+    }
+  }
+} else {
+  let toggle = false
+  for (const m of messages) {
+    if (!nameSide.has(m.name)) {
+      nameSide.set(m.name, toggle ? 'right' : 'left')
+      toggle = !toggle
+    }
+  }
+}
+
+// 头像尺寸：请求更大分辨率再缩小显示，减少锯齿
+const AVATAR_SIZE = 128
+
+function getAvatarUrl(msg: ChatMessage): string {
+  if (msg.avatar === 'minecraft') {
+    return `https://mc-heads.net/avatar/${encodeURIComponent(msg.name)}/${AVATAR_SIZE}`
+  }
+  return msg.avatar
+}
+---
+
+<div class={cn('wechat-chat not-prose my-6 overflow-hidden rounded-2xl border border-black/8 bg-[#edeeef] shadow-lg dark:border-white/12 dark:bg-[#1c1c1e]', className)}>
+  <!-- 标题栏 -->
+  <div class="flex items-center justify-between gap-2 border-b border-black/8 bg-[#ededed] px-4 py-3 dark:border-white/12 dark:bg-[#2c2c2e]">
+    <span class="text-sm font-medium text-[#191919] dark:text-[#f5f5f7]">{title}</span>
+    <div class="flex items-center gap-3 text-[#191919] dark:text-[#8e8e93]" aria-hidden="true">
+      <!-- 聊天气泡 + 三点 -->
+      <svg class="h-5 w-5 shrink-0" viewBox="0 0 1024 1024" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M155.9552 818.4832L267.6736 782.336l21.9136 12.6976c65.1264 37.7856 141.9264 58.2656 222.4128 58.2656 221.4912 0 398.2336-154.624 398.2336-341.2992S733.4912 170.7008 512 170.7008 113.7664 325.3248 113.7664 512c0 65.9456 21.8112 129.024 62.6688 183.6032l19.2512 25.8048-39.7312 97.0752zM512 910.2336c-92.7744 0-178.9952-24.2688-250.88-65.9456l-145.92 47.104c-6.3488 2.048-13.312 1.8432-19.5584-0.7168-14.5408-5.9392-21.504-22.528-15.5648-37.0688l50.7904-123.8016C84.0704 667.136 56.9344 592.384 56.9344 512c0-219.9552 203.776-398.2336 455.0656-398.2336S967.0656 292.0448 967.0656 512 763.392 910.2336 512 910.2336z"/><path d="M471.73531 552.25963a56.9344 56.9344 0 1 0 80.515995-80.518806 56.9344 56.9344 0 1 0-80.515995 80.518806Z"/><path d="M284.4672 512m-56.9344 0a56.9344 56.9344 0 1 0 113.8688 0 56.9344 56.9344 0 1 0-113.8688 0Z"/><path d="M739.5328 512m-56.9344 0a56.9344 56.9344 0 1 0 113.8688 0 56.9344 56.9344 0 1 0-113.8688 0Z"/></svg>
+      <!-- 向下箭头 -->
+      <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      <!-- 电话 + 摄像头（视频通话） -->
+      <svg class="h-5 w-5 shrink-0" viewBox="0 0 1024 1024" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M290.806 182.293a74.675 74.675 0 0 1 65.293 38.43l52.205 94.026a74.67 74.67 0 0 1 1.506 69.647l-44.976 89.934 0.168 0.576c1.5 5.118 3.35 10.703 5.577 16.656l0.397 1.055c8.459 22.327 20.225 44.682 35.732 65.426 6.85 9.163 14.304 17.822 22.387 25.904 7.985 7.984 16.53 15.35 25.56 22.12 20.758 15.56 43.125 27.335 65.462 35.772 6.35 2.399 12.294 4.37 17.714 5.948l0.614 0.177 89.971-44.977a74.68 74.68 0 0 1 69.036 1.167l0.648 0.356 94.31 52.426a74.673 74.673 0 0 1 38.394 65.267v108.254c0 77.13-72.77 132.24-145.685 107.641-66.757-22.52-132.888-49.505-194.716-81.168-78.94-40.426-145.87-85.976-197.1-137.2-51.23-51.222-96.786-118.143-137.219-197.073-31.667-61.819-58.655-127.94-81.181-194.689-24.605-72.912 30.516-145.675 107.651-145.675z m0 64H182.554c-34.167 0-57.343 30.594-47.01 61.211 21.581 63.952 47.406 127.224 77.502 185.974 37.624 73.449 79.562 135.055 125.508 180.994 45.947 45.941 107.563 87.874 181.021 125.493 58.76 30.092 122.042 55.914 186.003 77.492 30.627 10.332 61.226-12.841 61.226-47V722.203c0-3.875-2.1-7.446-5.488-9.329l-94.311-52.426a10.68 10.68 0 0 0-9.969-0.217l-100.577 50.28a32 32 0 0 1-20.335 2.804l-1.08-0.217-1.108-0.238-0.636-0.141-1.285-0.294-1.234-0.292-1.286-0.313-1.337-0.336-1.386-0.358-0.712-0.187-1.461-0.392c-8.254-2.24-17.354-5.157-27.096-8.837-27.672-10.452-55.316-25.005-81.234-44.433-11.412-8.555-22.252-17.9-32.426-28.072-10.295-10.294-19.748-21.274-28.396-32.843-19.337-25.869-33.858-53.456-44.32-81.07-3.682-9.721-6.607-18.8-8.86-27.034l-0.393-1.457-0.371-1.408-0.178-0.685-0.337-1.333-0.316-1.282-0.294-1.231-0.296-1.281-0.27-1.212-0.21-0.997-0.121-0.602a32 32 0 0 1 2.79-20.424l50.296-100.573a10.67 10.67 0 0 0-0.215-9.955l-52.208-94.032a10.677 10.677 0 0 0-9.338-5.493zM816.3 80c17.673 0 32 14.327 32 32l-0.001 16.749 62.819-25.124c20.81-8.322 43.426 6.767 43.876 29.035l0.007 0.677v170.699c0 22.638-22.864 38.118-43.883 29.712l-62.819-25.124v16.75c0 17.496-14.041 31.712-31.47 31.995l-0.53 0.004H560.216c-17.673 0-32-14.327-32-32V112c0-17.673 14.327-32 32-32z m-32.001 64H592.214v149.373h192.084v-32.012c0-22.412 22.41-37.808 43.252-29.957l0.632 0.245 62.817 25.124V180.6l-62.817 25.124c-20.81 8.322-43.426-6.767-43.877-29.035l-0.006-0.677-0.001-32.012z"/></svg>
+      <!-- 更多（三点） -->
+      <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    </div>
+  </div>
+
+  <!-- 聊天内容区 -->
+  <div class="max-h-[70vh] overflow-y-auto p-3">
+    {messages.map((msg) => {
+      const side = nameSide.get(msg.name) ?? 'left'
+      const avatarUrl = getAvatarUrl(msg)
+      return (
+        <div
+          class={cn(
+            'wechat-chat-row flex gap-2 py-1.5',
+            side === 'right' && 'flex-row-reverse'
+          )}
+        >
+          <span
+            class="wechat-chat-avatar-wrap inline-block h-9 w-9 shrink-0 overflow-hidden rounded-lg border border-black/10 bg-white dark:border-white/15"
+            data-avatar-type={msg.avatar === 'minecraft' ? 'minecraft' : 'custom'}
+          >
+            <img
+              src={avatarUrl}
+              alt={msg.name}
+              class="wechat-chat-avatar h-full w-full object-cover"
+              width={72}
+              height={72}
+              loading="lazy"
+              decoding="async"
+              fetchpriority="low"
+            />
+          </span>
+          <div
+            class={cn(
+              'flex max-w-[78%] flex-col gap-0.5',
+              side === 'right' && 'items-end'
+            )}
+          >
+            <div class="flex items-baseline gap-2">
+              <span class="text-xs text-[#888] dark:text-[#8e8e93]">{msg.name}</span>
+              {msg.time ? (
+                <span class="text-[11px] text-[#b0b0b0] dark:text-[#6e6e73]">{msg.time}</span>
+              ) : null}
+            </div>
+            <div
+              class={cn(
+                'rounded-2xl px-3 py-2 text-[15px] leading-relaxed',
+                side === 'left'
+                  ? 'rounded-bl-md bg-white text-[#191919] shadow-sm dark:bg-[#2c2c2e] dark:text-[#f5f5f7]'
+                  : 'rounded-br-md bg-[#95ec69] text-[#191919] dark:bg-[#34c759]'
+              )}
+            >
+              {msg.content ? (
+                <p class="whitespace-pre-wrap break-words">{msg.content}</p>
+              ) : null}
+              {msg.image ? (
+                <span class="mt-1.5 block overflow-hidden rounded-lg">
+                  <img
+                    src={msg.image}
+                    alt=""
+                    class="zoomable max-h-48 max-w-full cursor-zoom-in object-contain"
+                    loading="lazy"
+                  />
+                </span>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      )
+    })}
+  </div>
+</div>
+
+<style>
+  .wechat-chat :global(.wechat-chat-row:first-of-type) {
+    padding-top: 0.25rem;
+  }
+  .wechat-chat :global(.wechat-chat-avatar-wrap) {
+    isolation: isolate;
+  }
+  .wechat-chat :global(.wechat-chat-avatar) {
+    transform: translateZ(0);
+  }
+  /* MC 像素风头像用 crisp-edges 保持清晰 */
+  .wechat-chat :global(.wechat-chat-avatar-wrap[data-avatar-type="minecraft"] .wechat-chat-avatar) {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  /* 自定义图片头像用平滑缩放，避免锯齿 */
+  .wechat-chat :global(.wechat-chat-avatar-wrap[data-avatar-type="custom"] .wechat-chat-avatar) {
+    image-rendering: auto;
+  }
+</style>

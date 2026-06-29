@@ -1,0 +1,297 @@
+/** Links configuration for Links page */
+export interface LinkItem {
+  name: string
+  description: string
+  url: string
+  avatar: string
+  /** 普通友链需要日期用于计算印记，specialLinks 可以不填 */
+  addDate?: string
+  recommended?: boolean
+  disconnected?: boolean
+}
+
+/** 印记配置 - 根据添加天数显示不同印记 */
+export interface BadgeConfig {
+  name: string
+  minDays: number
+  maxDays: number
+  color: string
+  icon: string
+}
+
+export const badgeConfigs: BadgeConfig[] = [
+  { name: '失联/Lost', minDays: 0, maxDays: 0, color: '#9ca3af', icon: 'ghost' },
+  { name: '初遇/First', minDays: 0, maxDays: 30, color: '#94a3b8', icon: 'star' },
+  { name: '萌芽/Sprout', minDays: 30, maxDays: 60, color: '#22c55e', icon: 'sprout' },
+  { name: '抽叶/Leaf', minDays: 60, maxDays: 90, color: '#22c55e', icon: 'leaf' },
+  { name: '绽放/Bloom', minDays: 90, maxDays: 180, color: '#22c55e', icon: 'bloom' },
+  { name: '轻语/Whisper', minDays: 180, maxDays: 270, color: '#22c55e', icon: 'feather' },
+  { name: '听风/Wind', minDays: 270, maxDays: 365, color: '#60a5fa', icon: 'wind' },
+  { name: '云游/Cloud', minDays: 365, maxDays: 450, color: '#60a5fa', icon: 'cloud' },
+  { name: '润泽/Water', minDays: 450, maxDays: 540, color: '#60a5fa', icon: 'water' },
+  { name: '凝冰/Ice', minDays: 540, maxDays: 630, color: '#60a5fa', icon: 'snowflake' },
+  { name: '磐石/Rock', minDays: 630, maxDays: 730, color: '#94a3b8', icon: 'mountain' },
+  { name: '坚守/Guard', minDays: 730, maxDays: 900, color: '#f97316', icon: 'shield' },
+  { name: '燃情/Fire', minDays: 900, maxDays: 1080, color: '#f97316', icon: 'flame' },
+  { name: '烈阳/Sun', minDays: 1080, maxDays: 1460, color: '#ef4444', icon: 'sun' },
+  { name: '雷鸣/Zap', minDays: 1460, maxDays: 2190, color: '#a855f7', icon: 'lightning' },
+  { name: '传世/Legend', minDays: 2190, maxDays: Infinity, color: '#a855f7', icon: 'crown' }
+]
+
+/** Special Links 的特殊印记配置 */
+export const specialLinkBadge: BadgeConfig & { days: number } = {
+  name: '特别/Special',
+  minDays: 0,
+  maxDays: Infinity,
+  color: '#f97316',
+  icon: 'crown',
+  days: 0
+}
+
+/** 计算链接的印记 */
+export function getLinkBadge(link: LinkItem | string): BadgeConfig & { days: number } {
+  // 兼容旧的 string 类型参数
+  if (typeof link === 'string') {
+    link = { addDate: link } as LinkItem
+  }
+
+  // 如果是失联状态，直接返回失联印记
+  if (link.disconnected) {
+    const disconnectedBadge = badgeConfigs.find(b => b.name.includes('失联'))!
+    return { ...disconnectedBadge, days: 0 }
+  }
+
+  // 没有日期时，退回默认印记，天数记为 0
+  if (!link.addDate) {
+    const badge = badgeConfigs[1]
+    return { ...badge, days: 0 }
+  }
+
+  const addDateObj = new Date(link.addDate)
+  const now = new Date()
+  const diffTime = now.getTime() - addDateObj.getTime()
+  const days = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+  
+  // 找到对应的印记配置
+  const badge = badgeConfigs.find(config => {
+    if (config.name.includes('失联')) return false // 跳过失联印记的常规匹配
+    if (config.maxDays === Infinity) {
+      return days >= config.minDays
+    }
+    return days >= config.minDays && days < config.maxDays
+  }) || badgeConfigs[1] // 默认返回初遇 (索引1)
+  
+  return { ...badge, days }
+}
+
+// 普通友链（包括推荐、失联等）
+export const links: LinkItem[] = [
+  {
+    name: "CWorld Site",
+    description: "求知若愚，虚怀若谷",
+    url: "https://cworld0.com/",
+    avatar: "https://gravatar.loli.net/avatar/1ffe42aa45a6b1444a786b1f32dfa8aa?s=200",
+    addDate: "2026-03-05",
+    recommended: true
+  },
+  {
+    name: "纸鹿摸鱼处",
+    description: "纸鹿至麓不知路，支炉制露不止漉",
+    url: "https://blog.zhilu.site/",
+    avatar: "https://www.zhilu.site/api/avatar.png",
+    addDate: "2025-09-03",
+    recommended: true
+  },
+  {
+    name: "Luxynth",
+    description: "我心匪石不可转",
+    url: "https://www.luxynth.cn",
+    avatar: "https://www.luxynth.cn/assets/images/avatar.jpg",
+    addDate: "2025-09-09",
+    disconnected: true
+  },
+  {
+    name: "鈴奈咲桜のBlog",
+    description: "愛することを忘れないで",
+    url: "https://blog.sakura.ink",
+    avatar: "https://q2.qlogo.cn/headimg_dl?dst_uin=2731443459&spec=5",
+    addDate: "2025-09-09",
+    recommended: true
+  },
+  {
+    name: "Almango",
+    description: "天真永不消逝，浪漫至死不渝。",
+    url: "https://www.almango.cn/",
+    avatar: "https://www.almango.cn/img/favicon.png",
+    addDate: "2025-09-09",
+    recommended: true
+  },
+  {
+    name: "kzhik's website",
+    description: "EXPLORE THE WORLD!",
+    url: "https://www.kzhik.cn",
+    avatar: "https://www.kzhik.cn/avatar.webp",
+    addDate: "2025-09-09",
+    recommended: true
+  },
+  {
+    name: "成烁BLOG",
+    description: "致一锦程 探索不停",
+    url: "https://blog.chengshuo.top",
+    avatar: "https://blog.chengshuo.top/usr/uploads/2025/08/1293883047.webp",
+    addDate: "2025-09-10"
+  },
+  {
+    name: "落尘up",
+    description: "不止于代码与技术，更关注生活与思考。在喧嚣中落下的尘埃，亦能闪烁微光。",
+    url: "https://www.luochen.chat/",
+    avatar: "https://www.luochenup.xyz/b_a5a3aa888355bdc617dca021efb19ab8.png",
+    addDate: "2025-09-11"
+  },
+  {
+    name: "硅基漫游指南",
+    description: "等待和犹豫才是这个世界上最无情的杀手",
+    url: "https://blog.helong.online",
+    avatar: "https://oss.helong.online/bucket-IMG/bea2394fef15b88de49ae37707b3c1b86d7dbc2035a752ef2581a8b6cb3b2e8c.png",
+    addDate: "2025-09-11"
+  },
+  {
+    name: "喵洛阁",
+    description: "愿你看清一切真相后，依旧热爱你的家人和朋友。",
+    url: "https://blog-v3.kemeow.top",
+    avatar: "https://img.314926.xyz/images/2025/08/13/no-background-kemiaofxjun.webp",
+    addDate: "2025-09-11"
+  },
+  {
+    name: "紫血小站",
+    description: "人山人海人来人往,自尊自爱自由自在",
+    url: "https://blog.ziyibbs.com/",
+    avatar: "https://blog.ziyibbs.com/favicon/logo.png",
+    addDate: "2025-09-11"
+  },
+  {
+    name: "RefactX Project",
+    description: "形体是简单而纯粹的，它不是完整的群体，每个形体都指向其复杂性，并最终被复杂性联系在一起。",
+    url: "https://www.refact.cc/",
+    avatar: "https://www.refact.cc/avatar.png",
+    addDate: "2025-09-21"
+  },
+  {
+    name: "酥米的小站",
+    description: "终有一日，寻梦中人",
+    url: "https://www.sumi233.top/",
+    avatar: "https://cdn.sumi233.top/gh/huang233893/blog-image-bed/top/huang233893/imgs/blog/userfb6a1018b84ce485.jpg",
+    addDate: "2025-09-21"
+  },
+  {
+    name: "雪萌天文台",
+    description: "发现巷子里的那颗星星",
+    url: "https://blog.snowy.moe/",
+    avatar: "https://img.snowy.moe/head.png",
+    addDate: "2025-09-22"
+  },
+  {
+    name: "UTOPIA",
+    description: "散落在世界一角的故事",
+    url: "https://ishya.top",
+    avatar: "https://ishya.top/source/imgs/avatar.jpg",
+    addDate: "2025-09-24",
+    recommended: true
+  },
+  {
+    name: "喜之梁",
+    description: "多点关心多点爱",
+    url: "https://blog.liang.one",
+    avatar: "https://bu.dusays.com/2025/10/02/68de1a78e7aa4.webp",
+    addDate: "2025-10-08",
+    disconnected: true
+  },
+  {
+    name: "春华秋实",
+    description: "无恙桃花，依然燕子，春景多别",
+    url: "https://linqiushi.top",
+    avatar: "https://youke1.picui.cn/s1/2025/10/07/68e52c2a55563.png",
+    addDate: "2025-10-09",
+    disconnected: true
+  },
+  {
+    name: "SokiのBlog",
+    description: "月下彼岸花",
+    url: "https://www.soki.moe",
+    avatar: "https://cdn.jsdelivr.net/gh/SokiSama/picked@main/avatar.jpg",
+    addDate: "2025-10-15"
+  },
+  {
+    name: "阿叶Ayeez的小站",
+    description: "记录学习历程，记录美好生活",
+    url: "https://blog.Ayeez.cn",
+    avatar: "https://qiniu.ayeez.cn/avatar.jpg",
+    addDate: "2025-11-15"
+  },
+  {
+    name: "Nebula Blog",
+    description: "Nebula.SYS",
+    url: "https://www.996icu.eu.org/",
+    avatar: "https://img.scdn.io/i/692d847f79589_1764590719.webp",
+    addDate: "2025-12-02"
+  },
+  {
+    name: "AlexMa's Blog",
+    description: "Create things with love.",
+    url: "https://blog.alexma.top/",
+    avatar: "https://blog-backend.alexma.top/api/v2/objects/avatar/112zjnt1f3c2cf3prp.webp",
+    addDate: "2025-12-11"
+  },
+  {
+    name: "是飞鱼Blog",
+    description: "一个热衷于分享见闻和科技信息的站点！",
+    url: "https://shifeiyu.cn",
+    avatar: "https://shifeiyu.cn/upload/%E7%AB%99%E7%82%B9logo.png",
+    addDate: "2025-12-31"
+  },
+  {
+    name: "SAKURAIN TEAM",
+    description: "用代码构建未来",
+    url: "https://sakurain.net/",
+    avatar: "https://sakurain.net/image/logo.webp",
+    addDate: "2026-02-09"
+  },
+  {
+    name: "J的个人博客",
+    description: "hi，欢迎来到我的个人博客，我会在这里分享教程，经验与生活",
+    url: "https://blog.jsoftstudio.top/",
+    avatar: "https://blog.jsoftstudio.top/css/all/favicon.ico",
+    addDate: "2026-02-20"
+  },
+  {
+    name: "Tianli",
+    description: "自知之明是最可贵的知识！",
+    url: "https://blog.tianli0.top/",
+    avatar: "https://q2.qlogo.cn/headimg_dl?dst_uin=507249007&spec=640",
+    addDate: "2026-03-05",
+    recommended: true
+  },
+  {
+    name: "NNNullptr",
+    description: "数学生的复古风个人站",
+    url: "https://xnmoe.com",
+    avatar: "https://www.xnmoe.com/assets/images/pfp.png",
+    addDate: "2026-03-27"
+  }
+]
+
+// Special Links（不算友链的其他特别链接）
+export const specialLinks: LinkItem[] = [
+  {
+    name: 'Astro',
+    description: 'The web framework for content-driven websites',
+    url: 'https://astro.build/',
+    avatar: 'https://avatars.githubusercontent.com/u/44914786?s=200&v=4'
+  },
+  {
+    name: 'Astro Theme Pure',
+    description: 'Stay hungry, stay foolish',
+    url: 'https://astro-pure.js.org/',
+    avatar: 'https://astro-pure.js.org/favicon/favicon.ico',
+  },
+]

@@ -1,0 +1,70 @@
+---
+import { cn } from '../../utils'
+
+interface Props {
+  /** 视频地址（必填），支持相对路径或完整 URL */
+  src: string
+  /** 封面图地址，在视频加载前或未播放时显示 */
+  poster?: string
+  /** 是否显示播放控件 */
+  controls?: boolean
+  /** 是否自动播放（注意：多数浏览器要求同时设置 muted 才生效） */
+  autoplay?: boolean
+  /** 是否静音 */
+  muted?: boolean
+  /** 是否循环播放 */
+  loop?: boolean
+  /** 是否内联播放（移动端不全屏） */
+  playsInline?: boolean
+  /** 视频宽度，默认 100% 响应式 */
+  width?: string | number
+  /** 额外 class */
+  class?: string
+  /** 预加载策略：none | metadata | auto */
+  preload?: 'none' | 'metadata' | 'auto'
+}
+
+const {
+  src,
+  poster,
+  controls = true,
+  autoplay = false,
+  muted = false,
+  loop = false,
+  playsInline = true,
+  width,
+  class: className,
+  preload = 'metadata'
+} = Astro.props
+---
+
+<div class={cn('video-wrapper my-4 overflow-hidden rounded-xl', className)}>
+  <video
+    class="w-full rounded-xl"
+    src={src}
+    poster={poster}
+    controls={controls}
+    autoplay={autoplay}
+    muted={muted}
+    loop={loop}
+    playsinline={playsInline}
+    preload={preload}
+    width={typeof width === 'number' ? width : undefined}
+    style={typeof width === 'string' ? `width: ${width}` : undefined}
+  >
+    <slot />
+    <p class="p-4 text-sm text-muted-foreground">
+      您的浏览器不支持 HTML5 视频播放，请
+      <a href={src} target="_blank" rel="noopener noreferrer" class="underline">下载视频</a>
+      观看。
+    </p>
+  </video>
+</div>
+
+<style>
+  .video-wrapper video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+</style>

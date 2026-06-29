@@ -1,0 +1,75 @@
+---
+import { cn } from '../../utils'
+
+const { class: className } = Astro.props
+---
+
+<quote-component class={cn('not-prose inline-block', className)}>
+  <div class='flex flex-row items-center gap-x-3 rounded-full border px-4 py-2 text-sm shadow-sm'>
+    <span class='relative flex items-center justify-center'>
+      <span
+        class='absolute size-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
+      ></span>
+      <span class='size-2 rounded-full bg-green-400'></span>
+    </span>
+    <p id='quote-sentence' class='font-medium text-muted-foreground'>Loading...</p>
+  </div>
+</quote-component>
+
+<script>
+  import config from 'virtual:config'
+
+  const { quote } = config.integ
+
+  class Quote extends HTMLElement {
+    render(sentence: string) {
+      const quoteEl = this.querySelector('#quote-sentence') as HTMLElement
+      if (!quoteEl) return
+      quoteEl.innerText = sentence
+    }
+
+    async fetchQuote(retries = 2): Promise<void> {
+      try {
+        // 添加超时控制
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 8000) // 8秒超时
+        
+        const response = await fetch(quote.server, {
+          signal: controller.signal,
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+        
+        clearTimeout(timeoutId)
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const data = await response.json()
+        // Because virtual:config can only be accessed using json string, function cannot work, so we need to use new Function
+        const targetFunction = new Function('data', `return (${quote.target})(data)`)
+        const quoteText = targetFunction(data)
+        this.render(quoteText || 'Stay hungry, stay foolish')
+      } catch (error) {
+        // 重试机制
+        if (retries > 0 && error instanceof Error && error.name !== 'AbortError') {
+          // 等待一段时间后重试
+          await new Promise(resolve => setTimeout(resolve, 1000))
+          return this.fetchQuote(retries - 1)
+        }
+        
+        // 所有重试失败后显示默认文本
+        this.render('Stay hungry, stay foolish')
+        
+        // 静默失败，不显示错误（避免控制台噪音）
+      }
+    }
+
+    connectedCallback() {
+      this.fetchQuote()
+    }
+  }
+  customElements.define('quote-component', Quote)
+</script>

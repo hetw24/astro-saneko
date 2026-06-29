@@ -1,0 +1,43 @@
+---
+import { Collapse, Icon } from 'astro-pure/user'
+import PageLayout from '@/layouts/CommonPage.astro'
+import ProjectSection from '@/components/projects/ProjectSection.astro'
+import { programs, learnings, oldProjects, others } from '@/projects-config'
+
+const headings = [
+  { depth: 2, slug: 'programs', text: 'Programs' },
+  { depth: 2, slug: 'learnings', text: 'Learnings' },
+  { depth: 2, slug: 'others', text: 'Others' },
+  { depth: 2, slug: 'gpg-signature', text: 'GPG Signature' }
+]
+---
+
+<PageLayout title='Projects' {headings} view>
+  <h2 id='github'>GitHub</h2>
+  <a
+    href='https://github.com/HoshiSaneko'
+    target='_blank'
+    rel='noopener noreferrer'
+  >
+    <img
+      src='https://ghchart.rshah.org/8C766D/HoshiSaneko'
+      alt='GitHub activities'
+      loading='lazy'
+      decoding='async'
+      class='w-full max-w-full my-2'
+    />
+  </a>
+
+  <h2 id='programs'>Programs</h2>
+  <ProjectSection projects={programs} />
+  <Collapse title='Some old projects'>
+    <ProjectSection projects={oldProjects} />
+  </Collapse>
+
+  <h2 id='learnings'>Learnings</h2>
+  <ProjectSection class='my-2' projects={learnings} />
+
+  <h2 id='others'>Others</h2>
+  <ProjectSection projects={others} />
+
+</PageLayout>

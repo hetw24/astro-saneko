@@ -1,0 +1,90 @@
+---
+import { Button } from 'astro-pure/user'
+import PageLayout from '@/layouts/BaseLayout.astro'
+import config from '@/site-config'
+
+const meta = {
+  title: 'Terms and Conditions',
+  description: 'Last updated: 2026-02-28'
+}
+
+const contact = (config as any).contact || {
+  email: 'qiatao0305@163.com',
+  website: 'https://your-website.com',
+  region: 'China'
+}
+---
+
+<PageLayout {meta}>
+  <Button title='Back' href='/terms' variant='back' />
+  <main class='mt-6 lg:mt-10'>
+    <div id='content-header' class='animate'>
+      <h1 class='mb-6 text-3xl font-medium'>Terms and Conditions / 服务条款</h1>
+      <p class='text-muted-foreground'>Last Updated: February 28, 2026 / 最后更新：2026年2月28日</p>
+    </div>
+
+    <div id='content' class='animate mt-8 prose prose-slate dark:prose-invert max-w-none'>
+      <h2>Agreement to Terms / 同意条款</h2>
+      <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+      <p>通过访问和使用本网站，您接受并同意受本协议条款和规定的约束。</p>
+
+      <h2>Use License / 使用许可</h2>
+      <p>Permission is granted to temporarily access the materials on this website for personal, non-commercial transitory viewing only.</p>
+      <p>允许临时访问本网站上的材料，仅供个人、非商业性的临时查看。</p>
+      <p>This license shall automatically terminate if you violate any of these restrictions and may be terminated by us at any time.</p>
+      <p>如果您违反任何这些限制，本许可将自动终止，我们可随时终止。</p>
+
+      <h2>Disclaimer / 免责声明</h2>
+      <p>The materials on this website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+      <p>本网站上的材料按"现状"提供。我们不提供任何明示或暗示的保证，并特此否认和否定所有其他保证，包括但不限于适销性、特定用途适用性或知识产权不侵权或其他权利不侵犯的暗示保证或条件。</p>
+
+      <h2>Limitations / 限制</h2>
+      <p>In no event shall we or our suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on this website.</p>
+      <p>在任何情况下，我们或我们的供应商均不对因使用或无法使用本网站上的材料而产生的任何损害（包括但不限于数据或利润损失或因业务中断造成的损害）承担责任。</p>
+
+      <h2>Accuracy of Materials / 材料的准确性</h2>
+      <p>The materials appearing on this website could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its website are accurate, complete, or current.</p>
+      <p>本网站上出现的材料可能包含技术、排版或摄影错误。我们不保证其网站上的任何材料准确、完整或最新。</p>
+
+      <h2>Links / 链接</h2>
+      <p>We have not reviewed all of the sites linked to our website and are not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by us of the site.</p>
+      <p>我们尚未审查链接到我们网站的所有网站，不对任何此类链接网站的内容负责。包含任何链接并不意味着我们认可该网站。</p>
+
+      <h2>Modifications / 修改</h2>
+      <p>We may revise these terms of service for its website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
+      <p>我们可能随时修改本网站的服务条款，恕不另行通知。使用本网站即表示您同意受这些服务条款的当前版本约束。</p>
+
+      <h2>User Content / 用户内容</h2>
+      <p>If you post comments or other content on this website, you grant us a non-exclusive, royalty-free, perpetual, and worldwide license to use, reproduce, modify, and distribute such content.</p>
+      <p>如果您在本网站上发布评论或其他内容，您授予我们非排他性、免版税、永久和全球性的许可，以使用、复制、修改和分发此类内容。</p>
+      <p>You are responsible for ensuring that your content does not violate any laws or infringe on the rights of others.</p>
+      <p>您有责任确保您的内容不违反任何法律或侵犯他人的权利。</p>
+
+      <h2>Prohibited Uses / 禁止使用</h2>
+      <p>You may not use this website:</p>
+      <p>您不得使用本网站：</p>
+      <ul>
+        <li>In any way that violates any applicable law or regulation / 以任何违反任何适用法律或法规的方式</li>
+        <li>To transmit any malicious code or harmful content / 传输任何恶意代码或有害内容</li>
+        <li>To impersonate or attempt to impersonate us or any other person / 冒充或试图冒充我们或任何其他人</li>
+        <li>To engage in any automated use of the system / 从事任何自动使用系统的行为</li>
+      </ul>
+
+      <h2>Governing Law / 适用法律</h2>
+      <p>These terms and conditions are governed by and construed in accordance with the laws of {contact.region}, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+      <p>这些条款和条件受{contact.region}法律管辖并根据其解释，您不可撤销地接受该地点法院的专属管辖权。</p>
+
+      <h2>Contact Information / 联系信息</h2>
+      <p>If you have any questions about these Terms and Conditions, please contact us:</p>
+      <p>如果您对这些服务条款有任何疑问，请联系我们：</p>
+      <ul>
+        <li>Email: <a href={`mailto:${contact.email}`}>{contact.email}</a> / 电子邮件：<a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+        <li>Website: <a href={contact.website} target='_blank' rel='noopener noreferrer'>{contact.website}</a> / 网站：<a href={contact.website} target='_blank' rel='noopener noreferrer'>{contact.website}</a></li>
+      </ul>
+
+      <hr />
+
+      <p><em>These Terms and Conditions were last updated on February 28, 2026. / 本服务条款最后更新于2026年2月28日。</em></p>
+    </div>
+  </main>
+</PageLayout>

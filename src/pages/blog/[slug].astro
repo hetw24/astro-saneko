@@ -1,0 +1,34 @@
+---
+import { type CollectionEntry, render } from 'astro:content'
+
+import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
+import { buildBlogSlugMap } from '@/utils/blogSlug'
+import PostLayout from '@/layouts/BlogPost.astro'
+
+export const prerender = true
+
+export async function getStaticPaths() {
+  const posts = sortMDByDate(await getBlogCollection())
+  const slugMap = buildBlogSlugMap(posts)
+  return posts.map((post) => {
+    const slug = slugMap.get(post.id)!
+    return {
+      params: { slug },
+      props: { post, posts, slugMap: Object.fromEntries(slugMap) }
+    }
+  })
+}
+
+type Props = {
+  post: CollectionEntry<'blog'>
+  posts: CollectionEntry<'blog'>[]
+  slugMap: Record<string, string>
+}
+
+const { post, posts, slugMap } = Astro.props
+const { Content, headings, remarkPluginFrontmatter } = await render(post)
+---
+
+<PostLayout {post} {posts} {headings} {remarkPluginFrontmatter} {slugMap}>
+  <Content />
+</PostLayout>

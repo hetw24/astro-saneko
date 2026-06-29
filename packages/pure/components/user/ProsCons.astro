@@ -1,0 +1,54 @@
+---
+import { cn } from '../../utils'
+import Icon from './Icon.astro'
+
+interface Props {
+  /** 优点区块标题 */
+  prosTitle?: string
+  /** 缺点区块标题 */
+  consTitle?: string
+  /** 外层容器 class */
+  class?: string
+}
+
+const {
+  prosTitle = '优点',
+  consTitle = '缺点',
+  class: className
+} = Astro.props
+---
+
+<div class={cn('pros-cons my-4 grid gap-3 sm:grid-cols-2', className)}>
+  <div class="pros-cons-block pros overflow-hidden rounded-xl border border-l-[6px] border-green-500/80 bg-green-500/5">
+    <p class="not-prose flex items-center gap-x-2 border-b border-green-500/20 px-4 py-2.5 font-medium text-green-700 dark:text-green-400" aria-hidden="true">
+      <Icon name="bulb" />
+      {prosTitle}
+    </p>
+    <div class="pros-cons-content px-4 py-3">
+      <slot name="pros" />
+    </div>
+  </div>
+  <div class="pros-cons-block cons overflow-hidden rounded-xl border border-l-[6px] border-amber-500/80 bg-amber-500/5">
+    <p class="not-prose flex items-center gap-x-2 border-b border-amber-500/20 px-4 py-2.5 font-medium text-amber-700 dark:text-amber-400" aria-hidden="true">
+      <Icon name="alert" />
+      {consTitle}
+    </p>
+    <div class="pros-cons-content px-4 py-3">
+      <slot name="cons" />
+    </div>
+  </div>
+</div>
+
+<style>
+  .pros-cons-content :global(ul),
+  .pros-cons-content :global(ol) {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+  .pros-cons-content :global(> :first-child) {
+    margin-top: 0;
+  }
+  .pros-cons-content :global(> :last-child) {
+    margin-bottom: 0;
+  }
+</style>

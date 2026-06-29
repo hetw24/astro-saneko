@@ -1,0 +1,151 @@
+---
+import { type iconsType, socialLinks } from 'astro-pure/types'
+import { Icon } from 'astro-pure/user'
+
+interface SubstatsItem {
+  platform: string
+  icon: (typeof socialLinks)[number]
+  color?: string
+  link?: string
+  text: string
+  api?: string
+  count?: number
+  copyId?: boolean // 是否点击时复制 ID
+  id?: string // 存储原始 ID 用于复制
+}
+
+type Props = {
+  stats: SubstatsItem[]
+}
+
+const { stats } = Astro.props as Props
+
+async function fetchCount(item: SubstatsItem) {
+  if (!item.api) return
+  try {
+    // 添加超时控制
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 8000) // 8秒超时
+    
+    const apiUrl = `https://api.swo.moe/stats/${item.api}`
+    
+    // 开发环境下输出 API URL 用于调试
+    if (import.meta.env.DEV) {
+      console.log(`[Substats] Fetching ${item.platform}: ${apiUrl}`)
+    }
+    
+    const response = await fetch(apiUrl, {
+      signal: controller.signal,
+      // 添加重试友好的配置
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    
+    clearTimeout(timeoutId)
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    
+    const data = await response.json()
+    
+    // 开发环境下输出响应数据用于调试
+    if (import.meta.env.DEV) {
+      console.log(`[Substats] Response for ${item.platform}:`, data)
+    }
+    
+    if (data.failed) {
+      throw new Error(data.message || 'API returned failed status')
+    } else {
+      item.count = data.count
+    }
+  } catch (error) {
+    // 只在开发环境显示详细错误，生产环境静默失败
+    if (import.meta.env.DEV) {
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          console.warn(`[Substats] Timeout for ${item.platform} (${item.api})`)
+        } else {
+          console.warn(`[Substats] Failed to fetch ${item.platform}: ${error.message}`)
+        }
+      } else {
+        console.warn(`[Substats] Unknown error for ${item.platform}:`, error)
+      }
+    }
+    // 失败时保持 count 为 undefined，UI 会显示 'null'
+  }
+}
+
+await Promise.all(stats.map(fetchCount))
+---
+
+<div class='grid grid-cols-1 gap-3 rounded-xl border p-2 sm:grid-cols-2 sm:p-3'>
+  {
+    stats.map(({ link, platform, icon, color, count, text, copyId, id }) => {
+      if (copyId && id) {
+        // 抖音：点击时复制 ID
+        const copyScript = `
+          navigator.clipboard.writeText('${id}');
+          document.dispatchEvent(new CustomEvent('toast', {
+            detail: { message: '已复制 ID: ${id}' }
+          }));
+        `
+        return (
+          <div
+            class='group cursor-pointer text-muted-foreground'
+            onclick={copyScript}
+          >
+            <div class='flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:border-border hover:bg-muted'>
+              {icon && <Icon name={icon as iconsType} color={color} />}
+              <div class='flex-1 text-foreground transition-colors group-hover:text-primary'>
+                {platform}
+              </div>
+              {count ? (
+                <div class='flex items-center gap-1.5'>
+                  <samp>{count}</samp>
+                  <span class='text-sm font-normal'>{text}</span>
+                </div>
+              ) : (
+                'null'
+              )}
+            </div>
+          </div>
+        )
+      } else {
+        // 其他平台：正常跳转
+        return (
+          <a
+            class='group text-muted-foreground no-underline'
+            href={link}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <div class='flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:border-border hover:bg-muted'>
+              {icon && <Icon name={icon as iconsType} color={color} />}
+              <div class='flex-1 text-foreground transition-colors group-hover:text-primary'>
+                {platform}
+              </div>
+              {count ? (
+                <div class='flex items-center gap-1.5'>
+                  <samp>{count}</samp>
+                  <span class='text-sm font-normal'>{text}</span>
+                </div>
+              ) : (
+                'null'
+              )}
+            </div>
+          </a>
+        )
+      }
+    })
+  }
+</div>
+<div class='mt-2 text-right text-sm'>
+  Display real-time; powered by <a
+    class='text-muted-foreground'
+    href='http://github.com/spencerwooo/substats'
+    target='_blank'
+    rel='noopener noreferrer'>Substats</a
+  >
+</div>

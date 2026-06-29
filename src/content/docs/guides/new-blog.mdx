@@ -1,0 +1,93 @@
+---
+title: '新建博客'
+description: '使用命令行一键创建新博客文章，自动按年月分目录、生成 index.md 与默认封面'
+order: 0
+---
+
+## 推荐方式（一键创建）
+
+在项目根目录执行：
+
+```bash
+bun run new "文章标题"
+```
+
+或：
+
+```bash
+bun pure new -y "文章标题"
+```
+
+**效果：**
+
+- 按当前年月建目录（如 `blog/2026/03/`），文件夹名=标题，生成 `index.md`
+- 自动复制默认封面、写入 frontmatter（含 `heroImage`、tag `Uncategorized`）
+
+**示例：**
+
+```bash
+bun run new "评论系统配置指南"
+# → 生成 src/content/blog/2026/03/评论系统配置指南/index.md
+```
+
+创建完成后，直接编辑 `index.md` 写正文即可；如需更换封面，替换该文件夹下的 `thumbnail.jpg`。
+
+---
+
+## 可选参数
+
+| 参数 | 简写 | 说明 |
+|------|------|------|
+| `--date <YYYY-MM-DD>` | — | 指定发布日期（目录按该日期的年/月生成） |
+| `--lang <en\|zh>` | `-l` | 设置 frontmatter 中的 `lang` |
+| `--draft` | `-d` | 创建为草稿（`draft: true`） |
+| `--mdx` | `-m` | 生成 `index.mdx` 而非 `index.md` |
+| `--folder` | `-f` | 仅按标题建文件夹，不按年/月（生成在 `blog/标题/index.md`） |
+| `--year` | `-y` | 按年/月建目录（与 `bun run new` 默认行为一致） |
+| `--help` | `-h` | 显示帮助信息 |
+
+**示例：**
+
+```bash
+# 指定发布日期（目录为 2025 年 12 月）
+bun pure new -y --date 2025-12-25 "圣诞节随笔"
+
+# 创建为草稿
+bun run new -- -d "待完成的思路"
+
+# 使用 MDX 格式（可写 JSX 组件）
+bun pure new -y -m "带组件的文章"
+
+# 查看所有选项
+bun pure new -h
+```
+
+---
+
+## 默认生成内容说明
+
+新建文章的 frontmatter 示例：
+
+```yaml
+title: 文章标题
+description: 'Write your description here.'
+publishDate: 2026-03-06 12:00:00
+heroImage: { src: './thumbnail.jpg', color: '#A0A0A0' }
+tags:
+  - Uncategorized
+---
+```
+
+- **封面图**：默认从 `src/assets/blogs/thumbnail.jpg` 复制到文章目录；若该文件不存在，脚本会提示跳过，不会报错。
+- **标签**：默认为 `Uncategorized`（未分类），可在 frontmatter 中自行修改。
+
+---
+
+## 手动创建时的目录规范
+
+若不想用命令，也可手动在 `src/content/blog/` 下建目录与文件，建议：
+
+- 按年/月组织：`blog/2026/03/文章标题/index.md`
+- 封面图放在同目录下，命名为 `thumbnail.jpg`，并在 frontmatter 中设置 `heroImage: { src: './thumbnail.jpg', color: '#A0A0A0' }`
+
+这样与 `bun run new` 生成的结构一致，便于维护。
