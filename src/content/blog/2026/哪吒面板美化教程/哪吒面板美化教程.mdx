@@ -1,0 +1,184 @@
+---
+title: 哪吒面板美化教程
+description: '个人美化备份'
+publishDate: 2026-02-22 
+heroImage: { src: './nezha.webp', color: '#8F7862' }
+tags:
+  - 美化
+---
+
+## **关于美化**
+<div align="left">
+    <img src=https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/blog/nezha/logo.png width=100/>
+
+最近花了不少心思在哪吒面板的美化上🤣
+
+在这先感谢下原作者**faiz佬**的[美化项目](https://github.com/decadefaiz/Nezha-Dash-UI)
+
+顺便分享一下我的美化成果，
+
+供大家参考
+
+![nezha.jpg](https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/blog/nezha/nezha.jpg)
+
+### **主页**
+
+------
+```html
+<!-- 引入阿里巴巴图标矢量库 !-->
+
+<head>
+
+  <link
+
+    rel="stylesheet"
+
+    href="//at.alicdn.com/t/c/font_4956031_hmsr66o6t1g.css"
+
+  />
+
+  <!-- 替换为您的 Iconfont 链接 -->
+
+</head>
+
+<!-- 哪吒面板界面美化 - 模块化版本 -->
+
+<script>
+
+<!-- 哪吒面板基础配置 -->
+
+  window.CustomBackgroundImage = "https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/wallpaper/Scarlet.webp"; // 【PC端背景】桌面端页面的主背景图片URL
+
+  window.CustomMobileBackgroundImage = "https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/wallpaper/%E9%81%90%E8%9D%B62.webp"; // 【移动端背景】移动端页面的主背景图片URL
+
+  window.CustomLogo = "https://images.icon-icons.com/2397/PNG/512/microsoft_onedrive_drive_office_logo_icon_145729.png"; // 【LOGO】页面左上角的LOGO图片URL
+
+  window.CustomDesc = "『卍解·花無十日紅』"; // 【描述】LOGO下方的描述文字
+
+  window.ShowNetTransfer = true; // 【流量显示】是否在卡片上显示实时上下行流量 (true/false)
+
+  window.ForceCardInline = false; // 【卡片排列】是否强制所有服务器卡片在同一行显示 (true/false)
+
+  window.DisableAnimatedMan = true; // 【人物动画】是否禁用看板娘动画 (true/false)
+
+  window.CustomIllustration = "https://gh-proxy.org/https://github.com/hetw24/homepage/blob/main/public/img/丛雨.png"; // 【自定义插图】右下角的插图URL (需禁用人物动画)
+
+  window.FixedTopServerName = false; // 【名称位置】是否将服务器名称固定在卡片顶部 (true/false)
+
+  window.ForceTheme = "light"; // 【强制主题】强制使用指定主题 ("light" 或 "dark", 留空则跟随系统)
+
+</script>
+
+<!-- 自定义链接 -->
+
+<script src="https://cdn.jsdelivr.net/gh/hetw25/Nezha-Dash-UI@main/js/custom-links.js"></script>
+
+<!-- 自定义插图 -->
+
+<script src="https://cdn.jsdelivr.net/gh/kamanfaiz/Nezha-Dash-UI@main/js/illustration.js"></script>
+
+<!-- 访客信息面板 -->
+
+<script src="https://cdn.jsdelivr.net/gh/kamanfaiz/Nezha-Dash-UI@main/js/visitor-info.js?v=20251214"></script>
+
+<!--音乐播放器所用的文件-->
+
+<!-- require APlayer -->
+<link rel="stylesheet" href="https://npm.elemecdn.com/aplayer@1.10.1/dist/APlayer.min.css">
+<script async src="https://npm.elemecdn.com/aplayer@1.10.1/dist/APlayer.min.js"></script>
+
+<!-- require MetingJS -->
+<script async src="https://npm.elemecdn.com/meting2@0.0.1/js/Meting.min.js"></script>  
+
+<!--音乐播放器-->
+<div id="aplayer01"></div>
+<script type="text/javascript">
+    const ap = new APlayer({
+　　　　  //定义容器
+        container: document.getElementById('aplayer01'),
+        fixed: true,
+　　　　 //关于音频的相关参数：
+        audio: [{
+            name: 'U.N.Owen就是她吗',//音频名称
+            artist: '東方project',//艺术家
+            url: 'https://g.blfrp.cn/https://github.com/hetw24/music/blob/main/aplayer/U.N.オーエンは彼女なのか.mp3',//文件地址
+            cover: 'https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/icon/東方project.webp'//封面地址
+           },
+           {
+            name: 'Native Faith',//音频名称
+            artist: '東方project',//艺术家
+            url: 'https://g.blfrp.cn/https://github.com/hetw24/music/blob/main/aplayer/Native Faith.mp3',//文件地址
+            cover: 'https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/icon/東方project.webp'//封面地址
+           },
+           {
+            name: 'Plain Asia',//音频名称
+            artist: '東方project',//艺术家
+            url: 'https://g.blfrp.cn/https://github.com/hetw24/music/blob/main/aplayer/Plain Asia.mp3',//文件地址
+            cover: 'https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/icon/東方project.webp'//封面地址
+            },
+            {
+            name: '神明眷恋的幻想乡',//音频名称
+            artist: '東方project',//艺术家
+            url: 'https://g.blfrp.cn/https://github.com/hetw24/music/blob/main/aplayer/神明眷恋的幻想乡.mp3',//文件地址
+            cover: 'https://g.blfrp.cn/https://github.com/hetw24/imagebed/blob/main/icon/東方project.webp'//封面地址
+           }]
+    });
+</script>
+<style>
+/* 背景压暗和模糊, 开了背景图建议开启 */
+    .dark .bg-cover::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        backdrop-filter: blur(6px);
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    .light .bg-cover::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        backdrop-filter: blur(6px);
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+</style>      
+```
+### **仪表盘**
+
+------
+```html
+<script>
+  // 禁用默认小人图（哪吒官方保留变量）
+  window.DisableAnimatedMan = true;
+</script>
+<style>
+  /* 替换默认头像图（avatar） */
+  img[src*="https://api.dicebear.com/7.x/notionists/svg"] {
+    content: url("https://gh-proxy.org/https://github.com/hetw24/imagebed/blob/main/Avatar/wechat%20icon.png") !important;
+    width: 100px !important;
+    height: auto !important;
+    margin-top: -0px;
+  }
+```
+### **卸载**
+备注:此教程来源于[Nodeseek-Retr0](https://www.nodeseek.com/post-208653-1) 
+**当你的机器不再需要探针时,如何优雅停止nezha service呢?**
+
+**停止agent：**
+```shell
+systemctl stop nezha-agent
+```
+
+**取消开机自动启动：**
+```shell
+systemctl disable nezha-agent
+```
+
+**删除agent二进制文件：**
+```shell
+rm -rf /opt/nezha
+```
+
+**删除service：**
+```shell
+rm /etc/systemd/system/nezha-agent.service
+```
