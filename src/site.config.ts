@@ -329,7 +329,7 @@ export const socialNetworks = {
 
 /** Blog history timeline configuration for About page */
 export const blogHistory = {
-  title: 'About Me:',
+  title: '时间线:',
   events: [
     {
       date: '2026-06-09',

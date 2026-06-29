@@ -25,7 +25,7 @@ import config from './src/site.config.ts'
 // https://astro.build/config
 export default defineConfig({
   // [Basic] 用于 sitemap、RSS channel link、OG 等，请改为你的站点地址
-  site: 'https://saneko.me',
+  site: 'https://astro.hetw24.dpdns.org/',
   // Deploy to a sub path
   // https://astro-pure.js.org/docs/setup/deployment#platform-with-base-path
   // base: '/astro-pure/',
