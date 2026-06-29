@@ -90,7 +90,7 @@ export const theme: ThemeUserConfig = {
       const socialIds = {
         github: 'hetw24', // GitHub 用户名
         bilibili: '3494365613787593', // Bilibili UID
-        /* tiktok: '71134083952', */
+        tiktok: '#',
         email: 'lunarhackerbgg@gmail.com' // 邮箱账号
       }
       
